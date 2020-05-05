@@ -71,23 +71,21 @@
       <Pane fx:id="centralPanel" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <MediaView fx:id="mediaView" fitHeight="450.0" fitWidth="720.0" layoutX="17.0" />
-         </children>
-      </Pane>
-   </center>
-   <right>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="14.0" prefHeight="22.0" prefWidth="142.0" text="Now Playing" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="461.0" prefHeight="22.0" prefWidth="142.0" text="Now Playing" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="songNameLabel" contentDisplay="CENTER" layoutX="9.0" layoutY="57.0" prefHeight="55.0" prefWidth="183.0" textFill="#10ac84">
+            <Label fx:id="songNameLabel" contentDisplay="CENTER" layoutX="17.0" layoutY="489.0" prefHeight="55.0" prefWidth="723.0" textFill="#10ac84">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-         </children></Pane>
+         </children>
+      </Pane>
+   </center>
+   <right>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
    <left>
       <JFXListView fx:id="SongLibrary" style="-fx-background-color: #222f3e;" BorderPane.alignment="CENTER" />

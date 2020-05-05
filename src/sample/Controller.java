@@ -152,7 +152,7 @@ public class Controller {
 
 
     @FXML
-    void PopulateListView(ActionEvent event) throws FileNotFoundException {
+    void PopulateListView(ActionEvent event) throws IOException {
 //        songList with songNumber->songName->videopath
         HashMap<String, HashMap<String, String>> songList= new HashMap<>();
 
@@ -223,18 +223,41 @@ if(songList.isEmpty())
 
         @Override
         public void handle(MouseEvent event) {
+
+
+
 //                System.out.println("clicked on " + SongLibrary.getSelectionModel().getSelectedItem().getText());
 //                songNameLabel.setText(SongLibrary.getSelectionModel().getSelectedItem().getChildren().get());
 
         }
     });
+
+
 }
 
         for (String key : songList.keySet()) {
-//            System.out.println("Key = " + key);
+            System.out.println("Key = " + key);
+            FileInputStream fis = new FileInputStream(new File(directoryName + "/karaokeApp/"+key + "/songDetails.txt"));
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Song s1 = null;
+            try {
+                s1 = (Song) ois.readObject();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+//            System.out.println("____________________\n"+);
+
+
             HBox hbox = new HBox();
             Pane pane = new Pane();
-            Label listLabel = new Label(key);
+            String SONG_NAME=s1.getSongName().length()>30?s1.getSongName().substring(0,27)+"...":s1.getSongName();
+
+//            Label listLabel = new Label(SONG_NAME);
+
+            SongLabel listLabel=new SongLabel();
+
+//            ((Label)component).putClientProperty("person", value);
+
             JFXButton btn = new JFXButton("+");
             btn.setStyle("-fx-text-fill:#10ac84;");
             hbox.getChildren().addAll(listLabel, pane, btn);
@@ -248,17 +271,9 @@ if(songList.isEmpty())
 //                    System.getProperties().list(System.out);
                     System.out.println(System.getProperty("user.home"));
                     System.out.println(System.getProperty("os.name"));
-
-                    File songDirectory = new File(directoryName + "/karaokeApp/song" + finalI);
-                    if (!songDirectory.exists()) {
-                        songDirectory.mkdir();
-
-                    }
-
-
                 }
             });
-//    listLabel.setGraphic(new ImageView(new Image(new FileInputStream("tone.png")))) ;
+
 
             SongLibrary.getItems().add(hbox);
         }
@@ -276,8 +291,13 @@ if(songList.isEmpty())
 
             @Override
             public void handle(MouseEvent event) {
-//                System.out.println("clicked on " + SongLibrary.getSelectionModel().getSelectedItem().getText());
-//                songNameLabel.setText(SongLibrary.getSelectionModel().getSelectedItem().getChildren().get());
+
+                System.out.println("Got Some Nerve");
+                String selectedSongLabel=SongLibrary.getSelectionModel().getSelectedItem().getChildren().get(0).toString();
+                selectedSongLabel=selectedSongLabel.substring(selectedSongLabel.indexOf("'")+1,selectedSongLabel.length()-1);
+                System.out.println("clicked on " + selectedSongLabel);
+                songNameLabel.setText(selectedSongLabel);
+
 
             }
         });
@@ -287,7 +307,7 @@ if(songList.isEmpty())
 
 
     @FXML
-    void getDataFromFile(ActionEvent event) {
+    void getDataFromFile(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("pdf Files Only !", "*.pdf");
         fileChooser.getExtensionFilters().add(filter);
@@ -308,9 +328,11 @@ if(songList.isEmpty())
 //            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
         System.out.println("All the data that you want ! fucker ");
     }
 
 
 }
+
 
