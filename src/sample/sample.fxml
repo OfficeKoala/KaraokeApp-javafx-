@@ -2,90 +2,166 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="1154.0" style="-fx-background-color: #222f3e;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1239.0" style="-fx-background-color: #222f3e;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <top>
-      <Pane fx:id="topPane" prefHeight="37.0" prefWidth="887.0" style="-fx-background-color: #2f3640;" BorderPane.alignment="CENTER">
+      <Pane fx:id="topPane" prefHeight="38.0" prefWidth="1154.0" style="-fx-background-color: #2f3640;" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="btn_minimize" buttonType="RAISED" layoutX="1096.0" layoutY="6.0" onAction="#handleSceneMinimize" text="_" textFill="#10ac84" />
-            <JFXButton fx:id="btn_close" alignment="CENTER" layoutX="1128.0" layoutY="6.0" onAction="#handleSceneClose" ripplerFill="#10ac84" text="X" textFill="#10ac84">
+            <JFXButton fx:id="btn_minimize" buttonType="RAISED" layoutX="1176.0" layoutY="7.0" onAction="#handleSceneMinimize" text="_" textFill="#10ac84" />
+            <JFXButton fx:id="btn_close" alignment="CENTER" layoutX="1208.0" layoutY="7.0" onAction="#handleSceneClose" ripplerFill="#10ac84" text="X" textFill="#10ac84">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+            </JFXButton>
+            <JFXButton layoutY="3.0" onAction="#PopulateListView" text="Load-SongLibrary" textFill="#10ac84">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#10ac84" glyphName="ALIGN_JUSTIFY" size="22" />
+               </graphic>
             </JFXButton>
          </children>
       </Pane>
    </top>
    <bottom>
-      <Pane prefHeight="91.0" prefWidth="1154.0" style="-fx-background-color: #2f3640;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="64.0" prefWidth="1148.0" style="-fx-background-color: #2f3640;" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton layoutX="551.0" layoutY="33.0" onAction="#playMediaPlayer" text="Play" textFill="#10ac84">
+            <JFXButton layoutX="666.0" layoutY="19.0" onAction="#playMediaPlayer" text="play" textFill="#10ac84">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="1.0" />
                </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#fdcb6e" glyphName="PLAY" size="20" text="" />
+               </graphic>
             </JFXButton>
-            <JFXButton layoutX="611.0" layoutY="33.0" text="Next" textFill="#10ac84">
+            <JFXButton layoutX="774.0" layoutY="14.0" onAction="#NextSong" text="Next" textFill="#10ac84">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="1.0" />
                </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#fdcb6e" glyphName="ANGLE_RIGHT" size="30" />
+               </graphic>
             </JFXButton>
-            <JFXButton layoutX="465.0" layoutY="33.0" text="Previous" textFill="#10ac84">
+            <JFXButton layoutX="556.0" layoutY="14.0" onAction="#PreviousSong" text="Previous" textFill="#10ac84">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="1.0" />
                </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#fdcb6e" glyphName="ANGLE_LEFT" size="30" />
+               </graphic>
             </JFXButton>
-            <JFXButton layoutX="686.0" layoutY="33.0" onAction="#stopMediaPlayer" text="Stop" textFill="#10ac84">
+            <JFXButton layoutX="394.0" layoutY="18.0" onAction="#stopMediaPlayer" text="stop" textFill="#10ac84">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="1.0" />
                </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#fdcb6e" glyphName="STOP" size="25" />
+               </graphic>
             </JFXButton>
-            <JFXButton layoutX="37.0" layoutY="33.0" onAction="#OpenFile" text="Browse" textFill="#10ac84">
+            <JFXButton layoutX="471.0" layoutY="19.0" onAction="#pauseMediaPlayer" text="pause" textFill="#10ac84">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="1.0" />
                </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#fdcb6e" glyphName="PAUSE" size="20" />
+               </graphic>
             </JFXButton>
-            <JFXButton layoutX="387.0" layoutY="33.0" onAction="#pauseMediaPlayer" text="Pause" textFill="#10ac84">
+            <JFXButton layoutX="1072.0" layoutY="15.0" onAction="#savePlaylist" text="Save Playlists" textFill="#10ac84">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
-            </JFXButton>
-            <JFXButton layoutX="211.0" layoutY="33.0" onAction="#PopulateListView" text="Populate" textFill="#10ac84">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </JFXButton>
-            <JFXButton layoutX="882.0" layoutY="31.0" onAction="#getDataFromFile" text="Test" textFill="#10ac84">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#d9a63f" glyphName="MUSIC" size="20" />
+               </graphic>
             </JFXButton>
          </children>
       </Pane>
    </bottom>
    <center>
-      <Pane fx:id="centralPanel" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="centralPanel" prefHeight="668.0" prefWidth="793.0" BorderPane.alignment="CENTER">
          <children>
-            <MediaView fx:id="mediaView" fitHeight="450.0" fitWidth="720.0" layoutX="17.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="461.0" prefHeight="22.0" prefWidth="142.0" text="Now Playing" textFill="WHITE">
+            <MediaView fx:id="mediaView" fitHeight="450.0" fitWidth="720.0" layoutX="67.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="349.0" layoutY="458.0" prefHeight="22.0" prefWidth="142.0" text="Now Playing" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="songNameLabel" contentDisplay="CENTER" layoutX="17.0" layoutY="489.0" prefHeight="55.0" prefWidth="723.0" textFill="#10ac84">
+            <Label fx:id="songNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="488.0" prefHeight="55.0" prefWidth="723.0" textFill="#fdcb6e">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Book Antiqua Bold" size="15.0" />
                </font>
             </Label>
+            <FontAwesomeIconView fill="#10ac84" glyphName="MUSIC" layoutX="461.0" layoutY="485.0" selectionFill="#dd2752" size="45" />
          </children>
       </Pane>
    </center>
    <right>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXTextField fx:id="searchBar" focusColor="#10ac84" layoutX="31.0" layoutY="47.0" onAction="#searchSong" prefHeight="31.0" prefWidth="158.0" style="-fx-text-fill: White;" unFocusColor="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXTextField>
+            <Label fx:id="searchResults" alignment="CENTER" contentDisplay="CENTER" layoutX="30.0" layoutY="102.0" prefHeight="22.0" prefWidth="142.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" layoutX="7.0" layoutY="75.0" selectionFill="#fdcb6e" size="15" />
+            <JFXButton layoutX="17.0" layoutY="612.0" onAction="#showPlayLists" text="Show Playlists Tab" textFill="#10ac84">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#d9a63f" glyphName="MUSIC" size="20" />
+               </graphic>
+            </JFXButton>
+            <JFXTextField fx:id="playListTextField" focusColor="#10ac84" layoutX="22.0" layoutY="174.0" onAction="#createPlayList" prefHeight="31.0" prefWidth="158.0" style="-fx-text-fill: White;" unFocusColor="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXTextField>
+            <JFXButton layoutX="13.0" layoutY="213.0" onAction="#createPlayList" text="Create New PlayList" textFill="#10ac84">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#d9a63f" glyphName="MUSIC" size="20" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="21.0" layoutY="351.0" onAction="#addToPlaylist" text="Add to PlayList" textFill="#10ac84">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#d9a63f" glyphName="MUSIC" size="20" />
+               </graphic>
+            </JFXButton>
+            <JFXTextField fx:id="addtoPlaylistField" focusColor="#10ac84" layoutX="22.0" layoutY="381.0" onAction="#createPlayList" prefHeight="31.0" prefWidth="158.0" style="-fx-text-fill: White;" unFocusColor="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXTextField>
+            <Label fx:id="playlistSearch" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="446.0" prefHeight="116.0" prefWidth="142.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="67.0" layoutY="582.0" onAction="#getDataFromFile" text="Test" textFill="#10ac84">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </JFXButton>
+         </children></Pane>
    </right>
    <left>
       <JFXListView fx:id="SongLibrary" style="-fx-background-color: #222f3e;" BorderPane.alignment="CENTER" />

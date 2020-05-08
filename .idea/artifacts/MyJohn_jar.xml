@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MyJohn:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MyJohn_jar</output-path>
+    <root id="archive" name="MyJohn.jar">
+      <element id="module-output" name="MyJohn" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../awesomeFont/fontawesomefx-commons-9.1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../awesomeFont/fontawesomefx-fontawesome-4.7.0-9.1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jcodec-0.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jsr305-3.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../pdfbox-app-2.0.19.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Jphoenix/jfoenix-9.0.8.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -9,7 +9,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.*;
 
-public class PDFManager {
+public class PDFManager implements Serializable{
 
     private PDFParser parser;
     private PDFTextStripper pdfStripper;
@@ -68,7 +68,7 @@ public class PDFManager {
 
             }
 
-            Song songDetails = new Song(arrOfStr[i], "SomeArtist");
+            Song songDetails = new Song(songName, "SomeArtist");
             FileOutputStream fileOut = new FileOutputStream(Controller.directoryName + "/karaokeApp/song" + i + "/songDetails.txt");
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(songDetails);
@@ -78,26 +78,6 @@ public class PDFManager {
 //            songWriter.write(arrOfStr[i]);
 
         }
-
-
-        int flag = 0;
-        File appTempDirectory = new File(appTempDir + "/Karaoketemp");
-        if (!appTempDirectory.exists()) {
-            appTempDirectory.mkdir();
-        }
-
-        File file = new File(appTempDir + "/Karaoketemp/songsLibraryFile.txt");
-        FileWriter myWriter = new FileWriter(appTempDir + "/Karaoketemp/songsLibraryFile.txt");
-        if (file.exists()) {
-            System.out.println("Exists");
-            fileExistsAddSongsToTheFile(file);
-        } else {
-            System.out.println("Does not Exists");
-            file.createNewFile();
-            myWriter.write(Text);
-            myWriter.close();
-        }
-
 
         return Text;
     }

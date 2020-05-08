@@ -12,10 +12,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-//        primaryStage.setTitle("JohnKaraokeApp");
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        System.out.println("_____________"+root);
+        //See if there are already present playlists
+        Controller.initializePlaylists();
+        PlaylistController.initialize(root);
+
     }
 
 
