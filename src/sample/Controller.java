@@ -334,9 +334,29 @@ public class Controller {
                 @Override
                 public void handle(MouseEvent event) {
 
+                    System.out.println("________________GOT HERE____________");
 
-//                System.out.println("clicked on " + SongLibrary.getSelectionModel().getSelectedItem().getText());
-//                songNameLabel.setText(SongLibrary.getSelectionModel().getSelectedItem().getChildren().get());
+
+                    FileChooser fileChooser = new FileChooser();
+                    FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("pdf Files Only !", "*.pdf");
+                    fileChooser.getExtensionFilters().add(filter);
+
+                    File file = fileChooser.showOpenDialog(null);
+                    filepath = file.toURI().toString();
+                    filepath = filepath.substring(filepath.indexOf(":") + 2, filepath.length());
+
+                    System.out.println("File Path Formatted : " + filepath);
+
+                    PDFManager pdfManager = new PDFManager();
+                    pdfManager.setFilePath(filepath);
+                    try {
+                        String text = pdfManager.toText();
+//            System.out.println("TEXT Formatted is here :: \n "+text);
+                    } catch (IOException ex) {
+                        System.out.println("_______ERROR______" + ex);
+//            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
 
                 }
             });
@@ -344,156 +364,153 @@ public class Controller {
 
         }
 
+        else
+        {
 
-        int index=0;
-        for (String key : songList.keySet()) {
+            int index=0;
+            for (String key : songList.keySet()) {
 
 //            System.out.println(" "+key);
-            FileInputStream fis = new FileInputStream(new File(directoryName + "/karaokeApp/" + key + "/songDetails.txt"));
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Song s1 = null;
-            try {
-                s1 = (Song) ois.readObject();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+                FileInputStream fis = new FileInputStream(new File(directoryName + "/karaokeApp/" + key + "/songDetails.txt"));
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                Song s1 = null;
+                try {
+                    s1 = (Song) ois.readObject();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
 //            System.out.println("____________________\n"+);
 
 
-            HBox hbox = new HBox();
-            Pane pane = new Pane();
-            String SONG_NAME = s1.getSongName().length() > 30 ? s1.getSongName().substring(0, 25) + "..." : s1.getSongName();
+                HBox hbox = new HBox();
+                Pane pane = new Pane();
+                String SONG_NAME = s1.getSongName().length() > 30 ? s1.getSongName().substring(0, 25) + "..." : s1.getSongName();
 
-            Label listLabel = new Label(SONG_NAME);
-            mapSongsWithLabel.put((Label) listLabel, (Song) s1);
-
-
-            JFXButton btn = new JFXButton("+");
-            mapSongsWithButtons.put((JFXButton) btn, (Song) s1);
-            btn.setStyle("-fx-text-fill:#10ac84;");
-            hbox.getChildren().addAll(listLabel, pane, btn);
-            HBox.setHgrow(pane, Priority.ALWAYS);
-
-            Song finalS = s1;
-
-            mapHboxIndex.put(hbox,index);
-            btn.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    //Delete the file already present there before writing new
-                    File fileObject = new File(directoryName + "/karaokeApp/" + key + "/songDetails.txt");
-                    fileObject.delete();
+                Label listLabel = new Label(SONG_NAME);
+                mapSongsWithLabel.put((Label) listLabel, (Song) s1);
 
 
+                JFXButton btn = new JFXButton("+");
+                mapSongsWithButtons.put((JFXButton) btn, (Song) s1);
+                btn.setStyle("-fx-text-fill:#10ac84;");
+                hbox.getChildren().addAll(listLabel, pane, btn);
+                HBox.setHgrow(pane, Priority.ALWAYS);
 
-                    if(btn.getText()=="+")
-                    {
+                Song finalS = s1;
+
+                mapHboxIndex.put(hbox,index);
+                btn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        //Delete the file already present there before writing new
+                        File fileObject = new File(directoryName + "/karaokeApp/" + key + "/songDetails.txt");
+                        fileObject.delete();
+
+
+
+                        if(btn.getText()=="+")
+                        {
 //                        System.out.println(" I : " + finalI + "" + event);
-                        String pathToVideo= addVideopathToSong();
-                        System.out.println("------Answer-----"+pathToVideo);
-                        mapSongsWithButtons.get(btn).setKaraokeVideoPath(pathToVideo);
+                            String pathToVideo= addVideopathToSong();
+                            System.out.println("------Answer-----"+pathToVideo);
+                            mapSongsWithButtons.get(btn).setKaraokeVideoPath(pathToVideo);
 
-                        System.out.println("=====Right Song =======or not===== "+      mapSongsWithButtons.get(btn).getSongName());
-                        songNameLabel.setText( mapSongsWithButtons.get(btn).getSongName());
-                        songNameLabel.setTextFill(Paint.valueOf("#fdcb6e"));
+                            System.out.println("=====Right Song =======or not===== "+      mapSongsWithButtons.get(btn).getSongName());
+                            songNameLabel.setText( mapSongsWithButtons.get(btn).getSongName());
+                            songNameLabel.setTextFill(Paint.valueOf("#fdcb6e"));
 
-                   //Adding Karaoke And saving the data
-                        FileOutputStream fileOut = null;
-                        try {
-                            fileOut = new FileOutputStream(Controller.directoryName + "/karaokeApp/" + key + "/songDetails.txt");
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        ObjectOutputStream objectOut = null;
-                        try {
-                            objectOut = new ObjectOutputStream(fileOut);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            objectOut.writeObject(finalS);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            objectOut.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                            //Adding Karaoke And saving the data
+                            FileOutputStream fileOut = null;
+                            try {
+                                fileOut = new FileOutputStream(Controller.directoryName + "/karaokeApp/" + key + "/songDetails.txt");
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            ObjectOutputStream objectOut = null;
+                            try {
+                                objectOut = new ObjectOutputStream(fileOut);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                objectOut.writeObject(finalS);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                objectOut.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
 
-                    }
+                        }
 
 //          ------------------------------------- Future reference --------------------
 //                    System.getProperties().list(System.out);
 //                    System.out.println(System.getProperty("user.home"));
 //                    System.out.println(System.getProperty("os.name"));
-                }
-            });
-
-
-            SongLibrary.getItems().add(hbox);
-
-            index++;
-        }
-
-        SongLibrary.setStyle("-fx-control-inner-background: #222f3e ;");
-
-        //Cell Click Functionality Implementation
-        SongLibrary.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-
-
-            @Override
-            public void handle(MouseEvent event) {
-
-                 HBox selectedHbox= SongLibrary.getSelectionModel().getSelectedItem();
-                 System.out.println("___________________SelectedItem Index___________"+mapHboxIndex.get(selectedHbox));
-                Label selectedSongLabel = (Label) SongLibrary.getSelectionModel().getSelectedItem().getChildren().get(0);
-                String selectedSong = mapSongsWithLabel.get(selectedSongLabel).getSongName();
-                System.out.println("Selected Song is  ===>>>>> " + mapSongsWithLabel.get(selectedSongLabel).getSongName());
-
-                System.out.println("_________________________Video path Present_________________"+ mapSongsWithLabel.get(selectedSongLabel).getKaraokeVideoPath());
-                String fileVideoPathToSong=mapSongsWithLabel.get(selectedSongLabel).getKaraokeVideoPath();
-
-
-                if (Player !=null) {
-
-                    System.out.println("+++++++++++++++++"+Player);
-//                    Player.stop();
-                    Player.dispose();
-                }
-
-
-
-                if(playerStatus==false){
-                    if(fileVideoPathToSong!=null){
-                        Media videoFile = new Media(fileVideoPathToSong);
-
-                        Player = new MediaPlayer(videoFile);
-
-                        mediaView.setMediaPlayer(Player);
-//                        Player.stop();
-                        Player.play();
-//                        playerStatus=true;
-                        songNameLabel.setText(selectedSong);
-                        songNameLabel.setTextFill(Paint.valueOf("#fdcb6e"));
                     }
-                    else
-                    {
+                });
+
+
+                SongLibrary.getItems().add(hbox);
+
+                index++;
+            }
+
+            SongLibrary.setStyle("-fx-control-inner-background: #222f3e ;");
+
+            //Cell Click Functionality Implementation
+            SongLibrary.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+
+
+                @Override
+                public void handle(MouseEvent event) {
+
+                    HBox selectedHbox= SongLibrary.getSelectionModel().getSelectedItem();
+                    System.out.println("___________________SelectedItem Index___________"+mapHboxIndex.get(selectedHbox));
+                    Label selectedSongLabel = (Label) SongLibrary.getSelectionModel().getSelectedItem().getChildren().get(0);
+                    String selectedSong = mapSongsWithLabel.get(selectedSongLabel).getSongName();
+                    System.out.println("Selected Song is  ===>>>>> " + mapSongsWithLabel.get(selectedSongLabel).getSongName());
+
+                    System.out.println("_________________________Video path Present_________________"+ mapSongsWithLabel.get(selectedSongLabel).getKaraokeVideoPath());
+                    String fileVideoPathToSong=mapSongsWithLabel.get(selectedSongLabel).getKaraokeVideoPath();
+
+
+                    if (Player !=null) {
+
+                        System.out.println("+++++++++++++++++"+Player);
+//                    Player.stop();
+                        Player.dispose();
+                    }
+
+
+
+                    if(playerStatus==false){
+                        if(fileVideoPathToSong!=null){
+                            Media videoFile = new Media(fileVideoPathToSong);
+
+                            Player = new MediaPlayer(videoFile);
+
+                            mediaView.setMediaPlayer(Player);
+//                        Player.stop();
+                            Player.play();
+//                        playerStatus=true;
+                            songNameLabel.setText(selectedSong);
+                            songNameLabel.setTextFill(Paint.valueOf("#fdcb6e"));
+                        }
+                        else
+                        {
 //
 //                    Player.stop();
-                        songNameLabel.setText("This Song Doesn't have a karaoke  video \n Set Yet  ! add by clicking + button");
-                        songNameLabel.setTextFill(Paint.valueOf("red"));
+                            songNameLabel.setText("This Song Doesn't have a karaoke  video \n Set Yet  ! add by clicking + button");
+                            songNameLabel.setTextFill(Paint.valueOf("red"));
+                        }
+
                     }
-
-                }
-
-
-
-
-
 
 //                String selectedSongLabel=SongLibrary.getSelectionModel().getSelectedItem().getChildren().get(0).toString();
 //                selectedSongLabel=selectedSongLabel.substring(selectedSongLabel.indexOf("'")+1,selectedSongLabel.length()-1);
@@ -501,37 +518,24 @@ public class Controller {
 
 
 
-            }
-        });
+                }
+            });
 
 
-    }
-
-
-    @FXML
-    void getDataFromFile(ActionEvent event) throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("pdf Files Only !", "*.pdf");
-        fileChooser.getExtensionFilters().add(filter);
-
-        File file = fileChooser.showOpenDialog(null);
-        filepath = file.toURI().toString();
-        filepath = filepath.substring(filepath.indexOf(":") + 2, filepath.length());
-
-        System.out.println("File Path Formatted : " + filepath);
-
-        PDFManager pdfManager = new PDFManager();
-        pdfManager.setFilePath(filepath);
-        try {
-            String text = pdfManager.toText();
-//            System.out.println("TEXT Formatted is here :: \n "+text);
-        } catch (IOException ex) {
-            System.out.println("_______ERROR______" + ex);
-//            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
+
+
     }
+
+
+//    @FXML
+//    void getDataFromFile(ActionEvent event) throws IOException {
+//
+//
+//
+//    }
 
 
     @FXML

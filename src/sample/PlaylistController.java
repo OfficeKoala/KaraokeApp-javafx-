@@ -53,12 +53,6 @@ public class PlaylistController {
         Pane pane= (Pane) Bpane.getCenter();
         songNameLabel= (Label) pane.getChildren().get(2);
         mediaView=(MediaView) pane.getChildren().get(0);
-        songNameLabel.setText("Hello");
-
-
-//        FXMLLoader fxmlLoader = new FXMLLoader();
-//        Pane p = fxmlLoader.load(root);
-//        FooController fooController = (FooController) fxmlLoader.getController();
 
         System.out.println("_____________"+root);
 
